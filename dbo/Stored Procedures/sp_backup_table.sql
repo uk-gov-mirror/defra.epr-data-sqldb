@@ -1,10 +1,13 @@
--- For Azure Synapse Analytics / SQL Server PDW
--- Using CREATE TABLE AS SELECT (CTAS) instead of stored procedure
-
--- Script to create backup table (replace parameters manually)
-DECLARE @table_name NVARCHAR(128) = '[TABLE_NAME]';          -- Replace with actual table name
-DECLARE @schema_name NVARCHAR(128) = '[SCHEMA_NAME]';        -- Replace with actual schema name
-DECLARE @backup_suffix NVARCHAR(50) = '[BACKUP_SUFFIX]';     -- Replace with suffix or leave empty
+CREATE PROC [dbo].[sp_backup_table]
+    @table_name NVARCHAR(128),
+    @schema_name NVARCHAR(128) = 'dbo',
+    @backup_suffix NVARCHAR(50) = NULL
+AS
+BEGIN
+    -- For Azure Synapse Analytics / SQL Server PDW
+    DECLARE @backup_table_name NVARCHAR(200);
+    DECLARE @backup_date NVARCHAR(20);
+    DECLARE @sql NVARCHAR(MAX);
 
 DECLARE @backup_table_name NVARCHAR(200);
 DECLARE @backup_date NVARCHAR(20);
